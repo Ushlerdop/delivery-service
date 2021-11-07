@@ -11,12 +11,16 @@ console.log($buttonOut);
 console.log($userName);
 
 const login = (user) => {
-    console.log(user);
-    $buttonAuth.style.display = 'none';
-    $buttonOut.style.display = 'flex';
-    $userName.style.display = 'flex';
-    $userName.textContent = user.login;
-    $modalAuth.style.display = 'none';
+    if (user.login) {
+        localStorage.setItem('user', JSON.stringify(user));
+        $buttonAuth.style.display = 'none';
+        $buttonOut.style.display = 'flex';
+        $userName.style.display = 'flex';
+        $userName.textContent = user.login;
+        $modalAuth.style.display = 'none';
+    } else {
+        alert('Введите логин');
+    }
 }
 
 const logout = () => {
@@ -46,7 +50,6 @@ $logInForm.addEventListener('submit', (e) => {
         login: $inputLogin.value,
         password: $inputPassword.value,
     }
-    localStorage.setItem('user', JSON.stringify(user));
     login(user);
 })
 
