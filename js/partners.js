@@ -1,3 +1,7 @@
+const $cardsRestaraunts = document.querySelector('.cards-restaurants');
+
+console.log($cardsRestaraunts);
+
 const partnersFetch = fetch('https://delivery-service-da3cc-default-rtdb.firebaseio.com/db/partners.json');
 /* .then((response) => response.json())
 .then((data) => {
@@ -12,16 +16,11 @@ function renderItems (data) {
 async function showFetch (fet) {
     try {
         let response = await fet;
-    let data = await response.json();
-    renderItems(data);
+        let data = await response.json();
+        renderItems(data);
     }
-
     catch (error) {
         console.error(error);
-    }
-
-    finally {
-        
     }
 }
 

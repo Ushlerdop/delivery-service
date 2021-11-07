@@ -10,9 +10,15 @@ function renderItems (data) {
 }
 
 async function showFetch (fet) {
-    let response = await fet;
-    let data = await response.json();
-    renderItems(data);
+    try {
+        let response = await fet;
+        let data = await response.json();
+        renderItems(data);
+    }
+
+    catch (error) {
+        console.error(error);
+    }
 }
 
 showFetch(partnersFetch);
