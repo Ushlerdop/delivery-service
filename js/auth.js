@@ -8,16 +8,12 @@ const $buttonOut = document.querySelector('.button-out');
 const $userName = document.querySelector('.user-name');
 
 const login = (user) => {
-    if (user.login) {
-        localStorage.setItem('user', JSON.stringify(user));
-        $buttonAuth.style.display = 'none';
-        $buttonOut.style.display = 'flex';
-        $userName.style.display = 'flex';
-        $userName.textContent = user.login;
-        $modalAuth.style.display = 'none';
-    } else {
-        alert('Введите логин');
-    }
+    localStorage.setItem('user', JSON.stringify(user));
+    $buttonAuth.style.display = 'none';
+    $buttonOut.style.display = 'flex';
+    $userName.style.display = 'flex';
+    $userName.textContent = user.login;
+    $modalAuth.style.display = 'none';
 }
 
 const logout = () => {
@@ -36,20 +32,26 @@ $buttonOut.addEventListener('click', () => {
     logout();
 })
 
-$closeAuth.addEventListener('click', (e) => {
-    e.preventDefault;
+$closeAuth.addEventListener('click', () => {
     $modalAuth.style.display = 'none';
 })
 
 $logInForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const user = {
-        login: $inputLogin.value,
-        password: $inputPassword.value,
+    $inputLogin.value = $inputLogin.value.trim();
+    if ($inputLogin.value == '') {
+        alert('Введите имя');
+    } else {
+        const user = {
+            login: $inputLogin.value.trim(),
+            password: $inputPassword.value.trim(),
+        }
+        login(user);
     }
-    login(user);
 })
 
 if (localStorage.getItem('user')) {
     login(JSON.parse(localStorage.getItem('user')));
 }
+
+export {$modalAuth};
