@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --mode=production",
-    "watch": "webpack --watch --mode=development" 
+    "watch": "webpack --watch --mode=development"
   },
   "repository": {
     "type": "git",

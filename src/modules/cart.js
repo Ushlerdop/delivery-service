@@ -4,9 +4,8 @@ const cart = () => {
     const $closeModalCart = $modalCart.querySelector('.close');
     const $cartBody = $modalCart.querySelector('.modal-body');
 
-    const cardItem = JSON.parse(localStorage.getItem('cart'));
-    console.log(cardItem);
     function renderItems(data) {
+        $cartBody.innerHTML = '';
         data.forEach(({name, price, id, count} ) => {
             const $foodRow = document.createElement('div');
             $foodRow.classList.add('food-row');
@@ -21,17 +20,20 @@ const cart = () => {
             `;
             $cartBody.append($foodRow);
         });
-    }  
+    }
 
     $buttonCart.addEventListener('click', () => {
+        console.log(JSON.parse(localStorage.getItem('cart')));
+        if (localStorage.getItem('cart')) {
+            renderItems(JSON.parse(localStorage.getItem('cart')));            
+        }
         $modalCart.classList.add('is-open');
     })
 
     $closeModalCart.addEventListener('click', () => {
         $modalCart.classList.remove('is-open');
-    })
 
-    renderItems(cardItem);
+    })
 }
 
 export default cart
