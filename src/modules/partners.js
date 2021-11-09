@@ -16,6 +16,7 @@ const partners = () => {
     function renderItems (data, place) {
         data.forEach((item) => {
             const {image, name, time_of_delivery, stars, price, kitchen, products} = item;
+            console.log();
             const a = document.createElement('a');
             a.dataset.products = products;
             a.setAttribute('href', 'restaurant.html');

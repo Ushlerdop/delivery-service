@@ -7,11 +7,13 @@ const auth = () => {
     const $inputPassword = document.getElementById('password');
     const $buttonOut = document.querySelector('.button-out');
     const $userName = document.querySelector('.user-name');
+    const $buttonCart = document.querySelector('.button-cart');
 
     const login = (user) => {
         localStorage.setItem('user', JSON.stringify(user));
         $buttonAuth.style.display = 'none';
         $buttonOut.style.display = 'flex';
+        $buttonCart.style.display = 'flex';
         $userName.style.display = 'flex';
         $userName.textContent = user.login;
         $modalAuth.style.display = 'none';
@@ -20,6 +22,7 @@ const auth = () => {
     const logout = () => {
         $buttonAuth.style.display = 'flex';
         $buttonOut.style.display = 'none';
+        $buttonCart.style.display = 'none';
         $userName.style.display = 'none';
         $userName.textContent = '';
         localStorage.removeItem('user');
