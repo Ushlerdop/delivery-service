@@ -5,6 +5,7 @@ const cart = () => {
     const $cartBody = $modalCart.querySelector('.modal-body');
     const $buttonSend = $modalCart.querySelector('.button-primary');
     const $buttonCancel = $modalCart.querySelector('.clear-cart');
+    const $buttonContinue = $modalCart.querySelector('.button-continue');
 
     function incrementCount(id) {
         const cartArray = JSON.parse(localStorage.getItem('cart'));
@@ -94,16 +95,23 @@ const cart = () => {
         $modalCart.classList.remove('is-open');
     })
 
-    $buttonCart.addEventListener('click', () => {
-        const cartIsEmpty = !localStorage.getItem('cart');        
-        if (cartIsEmpty) {
+    $buttonContinue.addEventListener('click', () => {
+        $modalCart.classList.remove('is-open');
+    })
+
+    $buttonCart.addEventListener('click', () => {      
+        if (!localStorage.getItem('cart')) {
             $cartBody.innerHTML = '';
             const $emptyCartMessage = document.createElement('div');
             $emptyCartMessage.innerHTML = 'Ваша корзина пуста. Вернитесь в меню и выберите что-нибудь на ваш вкус :)';
             $cartBody.append($emptyCartMessage);
+            $buttonContinue.classList.add('is-open');
+            $buttonSend.style.display = 'none';
         }
         if (localStorage.getItem('cart')) {
-            renderItems(JSON.parse(localStorage.getItem('cart')));            
+            renderItems(JSON.parse(localStorage.getItem('cart')));
+            $buttonContinue.classList.remove('is-open');
+            $buttonSend.style.display = 'flex';
         }
         $modalCart.classList.add('is-open');
     })

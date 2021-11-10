@@ -37,7 +37,7 @@ const menu = () => {
                         </div>
                     </div>
                     <div class="card-buttons">
-                        <button class="button button-primary button-add-cart">
+                        <button class="button button-add-cart">
                             <span class="button-card-text">В корзину</span>
                             <span class="button-cart-svg"></span>
                         </button>
