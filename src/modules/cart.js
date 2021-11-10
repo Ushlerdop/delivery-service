@@ -3,6 +3,8 @@ const cart = () => {
     const $modalCart = document.querySelector('.modal-cart');
     const $closeModalCart = $modalCart.querySelector('.close');
     const $cartBody = $modalCart.querySelector('.modal-body');
+    const $buttonSend = $modalCart.querySelector('.button-primary');
+    const $buttonCancel = $modalCart.querySelector('.clear-cart');
 
     function incrementCount(id) {
         const cartArray = JSON.parse(localStorage.getItem('cart'));
@@ -56,6 +58,13 @@ const cart = () => {
             $cartBody.append($foodRow);
         });
     }
+
+    function resetCart() {
+        $cartBody.innerHTML = '';
+        localStorage.removeItem('cart');
+        $modalCart.classList.remove('is-open');
+
+    }
     /*-----------ДЕЛЕГИРОВАНИЕ ОБРАБОТЧИКА СОБЫТИЙ. ОДИН ОБРАБОТЧИК НА ТЕЛЕ КОРЗИНЫ, ВМЕСТО ОБРАБОТЧИКА НА КАЖДОЙ!!! КНОПКЕ - и + ------*/
     $cartBody.addEventListener('click', (e) => {
         if (e.target.classList.contains('btn-inc')) {
@@ -64,9 +73,35 @@ const cart = () => {
             decrementCount(e.target.dataset.index);
         }
     })
+    //https://jsonplaceholder.typicode.com/posts
+    $buttonSend.addEventListener('click', () => {
+        const cartArray = localStorage.getItem('cart');
+
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            body: cartArray,
+        }).then(response => {
+            if (response.ok) {
+                resetCart();
+            }
+        })
+        .catch( e => console.error(e));
+    })
+
+    $buttonCancel.addEventListener('click', () => {
+        $cartBody.innerHTML = '';
+        localStorage.removeItem('cart');
+        $modalCart.classList.remove('is-open');
+    })
 
     $buttonCart.addEventListener('click', () => {
-        console.log(JSON.parse(localStorage.getItem('cart')));
+        const cartIsEmpty = !localStorage.getItem('cart');        
+        if (cartIsEmpty) {
+            $cartBody.innerHTML = '';
+            const $emptyCartMessage = document.createElement('div');
+            $emptyCartMessage.innerHTML = 'Ваша корзина пуста. Вернитесь в меню и выберите что-нибудь на ваш вкус :)';
+            $cartBody.append($emptyCartMessage);
+        }
         if (localStorage.getItem('cart')) {
             renderItems(JSON.parse(localStorage.getItem('cart')));            
         }
