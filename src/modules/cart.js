@@ -6,6 +6,7 @@ const cart = () => {
     const $buttonSend = $modalCart.querySelector('.button-primary');
     const $buttonCancel = $modalCart.querySelector('.clear-cart');
     const $buttonContinue = $modalCart.querySelector('.button-continue');
+    const $modalPricetag = $modalCart.querySelector('.modal-pricetag');
 
     function incrementCount(id) {
         const cartArray = JSON.parse(localStorage.getItem('cart'));
@@ -41,6 +42,7 @@ const cart = () => {
         renderItems(cartArray);
     }
 
+    let totalPrice = 0;
     function renderItems(data) {
         $cartBody.innerHTML = '';
         data.forEach(({name, price, id, count} ) => {
@@ -48,7 +50,7 @@ const cart = () => {
             $foodRow.classList.add('food-row');
             $foodRow.innerHTML = `
                 <span class="food-name">${name}</span>
-                <strong class="food-price">${price} ₽</strong>
+                <strong class="food-price">${price * count} ₽</strong>
                 <div class="food-counter">
                     <button class="counter-button btn-dec" data-index="${id}">-</button>
                     <span class="counter">${count}</span>
@@ -58,6 +60,10 @@ const cart = () => {
 
             $cartBody.append($foodRow);
         });
+
+        let totalPrice = data.reduce((sum, current) => sum + (current.price * current.count), 0);
+        console.log(totalPrice);
+        $modalPricetag.textContent = `${totalPrice} ₽`;
     }
 
     function resetCart() {
@@ -107,7 +113,7 @@ const cart = () => {
             $emptyCartMessage.classList.add('empty-cart-message');
             $emptyCartMessage.innerHTML = 'Ваша корзина пуста. Вернитесь в меню и выберите что-нибудь на ваш вкус :)';
             $cartBody.append($emptyCartMessage);
-            
+
             $buttonContinue.classList.add('is-open');
             $buttonSend.style.display = 'none';
         }
