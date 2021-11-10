@@ -102,9 +102,12 @@ const cart = () => {
     $buttonCart.addEventListener('click', () => {      
         if (!localStorage.getItem('cart')) {
             $cartBody.innerHTML = '';
+
             const $emptyCartMessage = document.createElement('div');
+            $emptyCartMessage.classList.add('empty-cart-message');
             $emptyCartMessage.innerHTML = 'Ваша корзина пуста. Вернитесь в меню и выберите что-нибудь на ваш вкус :)';
             $cartBody.append($emptyCartMessage);
+            
             $buttonContinue.classList.add('is-open');
             $buttonSend.style.display = 'none';
         }

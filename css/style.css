@@ -575,6 +575,11 @@ button {
     line-height: 23px;
 }
 
+.empty-cart-message {
+    font-size: 18px;
+    color: #414141;
+}
+
 @media (max-width: 1366px) {
     .container {
         max-width: 960px;
